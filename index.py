@@ -1,4 +1,7 @@
-def areAnagram(palavras1, palavras2):
+import sys
+
+
+def areAnagram(palavra1, palavra2):
 
 	n1 = len(palavra1)
 	n2 = len(palavra2)
@@ -24,15 +27,19 @@ def validacaoPalavra(palavrasQualquer):
 			valido += 1
 	return valido
 
-palavras1 = input("Palavra 1: ")
+palavras1 = sys.argv[1]
 palavras1 = palavras1.split(' ')
-palavras2 = input("Palavra 2: ")
-palavras2 = palavras2.split(' ')
+listaPalavras = open('palavras.txt').read().split()
 
-if (validacaoPalavra(palavras1) == 0 and validacaoPalavra(palavras2) == 0):
-	if areAnagram(palavras1, palavras2):
-		print ("Yeap")
-	else:
-		print ("Noap")
+if (validacaoPalavra(palavras1) == 0 and validacaoPalavra(listaPalavras) == 0):
+	anagramas = []
+	for palavra in listaPalavras:
+		for palavraComparada in palavras1:
+			if areAnagram(palavra.upper(), palavraComparada.upper()):
+				combinacao =  palavra + ' ' + palavraComparada
+				anagramas.append(combinacao)
+			else:
+				continue
+	print(anagramas)
 else:
 	print("Somente palavras que contem caracteres de A-Z")
