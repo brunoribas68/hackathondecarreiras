@@ -27,19 +27,26 @@ def validacaoPalavra(palavrasQualquer):
 			valido += 1
 	return valido
 
-palavras1 = sys.argv[1]
-palavras1 = palavras1.split(' ')
-listaPalavras = open('palavras.txt').read().split()
-
-if (validacaoPalavra(palavras1) == 0 and validacaoPalavra(listaPalavras) == 0):
+def getAnagramas(palavrasAComparar, listaPalavras):
 	anagramas = []
 	for palavra in listaPalavras:
-		for palavraComparada in palavras1:
+		for palavraComparada in palavrasAComparar:
 			if areAnagram(palavra.upper(), palavraComparada.upper()):
-				combinacao =  palavra + ' ' + palavraComparada
+				combinacao =  palavraComparada
 				anagramas.append(combinacao)
 			else:
 				continue
-	print(anagramas)
+	return anagramas
+
+palavrasAComparar = sys.argv[1]
+palavrasAComparar = palavrasAComparar.split(' ')
+listaPalavras = open('palavras.txt').read().split()
+if (validacaoPalavra(palavrasAComparar) == 0 and validacaoPalavra(listaPalavras) == 0):
+	anagramas = getAnagramas(palavrasAComparar,listaPalavras)
+	if len(anagramas) > 0:
+		for anagrama in anagramas:
+			print(anagrama + '\n')
+	else:
+		print('Nenhuma anagrama encontrado no universo de palavas do arquivo palavras.txt')
 else:
 	print("Somente palavras que contem caracteres de A-Z")
